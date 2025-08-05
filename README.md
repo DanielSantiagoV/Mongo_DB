@@ -91,7 +91,7 @@ La decisión clave en MongoDB es cuándo anidar datos (embeber) y cuándo crear 
 
 **Colección:** `recursos`
 
-## 🛠️ Comandos de Creación de la Base de Datos
+## 🛠️ Configuración de la Base de Datos
 
 ### 1. Conectar a MongoDB
 ```bash
@@ -99,44 +99,21 @@ mongosh
 ```
 
 ### 2. Crear y Usar la Base de Datos
-```javascript
-use mis_recursos_app
-```
+Usar el comando para crear y seleccionar la base de datos `mis_recursos_app`
 
 ### 3. Crear la Colección
-```javascript
-db.createCollection("recursos")
-```
+Crear la colección `recursos` para almacenar los documentos
 
 ### 4. Crear Índices para Optimizar Consultas
-```javascript
-// Índice para búsqueda por nombre
-db.recursos.createIndex({ "nombre": 1 })
-
-// Índice para filtros por estado
-db.recursos.createIndex({ "estado": 1 })
-
-// Índice para filtros por formato
-db.recursos.createIndex({ "formato": 1 })
-
-// Índice para filtros por plataforma
-db.recursos.createIndex({ "plataforma": 1 })
-
-// Índice compuesto para búsquedas eficientes
-db.recursos.createIndex({ "estado": 1, "formato": 1, "plataforma": 1 })
-```
+Crear índices en los campos principales para mejorar el rendimiento de las consultas:
+- Índice para búsqueda por nombre
+- Índice para filtros por estado
+- Índice para filtros por formato
+- Índice para filtros por plataforma
+- Índice compuesto para búsquedas eficientes
 
 ### 5. Verificar la Creación
-```javascript
-// Ver las colecciones en la base de datos
-show collections
-
-// Ver los índices creados
-db.recursos.getIndexes()
-
-// Verificar que la base de datos existe
-show dbs
-```
+Verificar que la base de datos y colección se crearon correctamente
 
 ## 🧪 Ejemplos de Documentos JSON
 
@@ -226,31 +203,19 @@ show dbs
 
 ### 2. Crear la Base de Datos
 
-```javascript
-use mis_recursos_app
-```
+Crear y seleccionar la base de datos `mis_recursos_app`
 
 ### 3. Crear la Colección
 
-```javascript
-db.createCollection("recursos")
-```
+Crear la colección `recursos` para almacenar los documentos
 
 ### 4. Crear Índices (Opcional pero Recomendado)
 
-```javascript
-// Índice para búsqueda por nombre
-db.recursos.createIndex({ "nombre": 1 })
-
-// Índice para filtros por estado
-db.recursos.createIndex({ "estado": 1 })
-
-// Índice para filtros por formato
-db.recursos.createIndex({ "formato": 1 })
-
-// Índice para filtros por plataforma
-db.recursos.createIndex({ "plataforma": 1 })
-```
+Crear índices en los campos principales para optimizar las consultas:
+- Índice para búsqueda por nombre
+- Índice para filtros por estado
+- Índice para filtros por formato
+- Índice para filtros por plataforma
 
 ### 5. Importar Datos JSON
 
@@ -273,104 +238,43 @@ db.recursos.createIndex({ "plataforma": 1 })
 mongoimport --db mis_recursos_app --collection recursos --file recursos.json --jsonArray
 ```
 
-#### Opción C: Usando mongosh
-```javascript
-// Conectar a MongoDB
-mongosh
-
-// Usar la base de datos
-use mis_recursos_app
-
-// Importar datos (desde la línea de comandos del sistema)
-// mongoimport --db mis_recursos_app --collection recursos --file recursos.json --jsonArray
-```
-
 ### 6. Verificar la Importación
 
-```javascript
-// Contar documentos
-db.recursos.countDocuments()
-
-// Ver algunos documentos
-db.recursos.find().limit(5)
-```
+Verificar que los datos se importaron correctamente contando los documentos y revisando algunos ejemplos
 
 ### 7. Probar las Funcionalidades
 
-Ahora puedes probar las consultas básicas en MongoDB:
+Ahora puedes probar las consultas básicas en MongoDB para:
+- Ver todos los recursos
+- Filtrar por estado
+- Filtrar por formato
+- Buscar por nombre
+- Contar recursos
 
-```javascript
-// Ver todos los recursos
-db.recursos.find()
-
-// Filtrar por estado
-db.recursos.find({ "estado": "Terminado" })
-
-// Filtrar por formato
-db.recursos.find({ "formato": "Serie" })
-
-// Buscar por nombre
-db.recursos.find({ "nombre": { $regex: "Breaking", $options: "i" } })
-
-// Contar recursos
-db.recursos.countDocuments()
-```
-
-## Ejemplos de Consultas
+## Ejemplos de Operaciones
 
 ### Crear un Nuevo Recurso
-```javascript
-db.recursos.insertOne({
-  "nombre": "Nueva Serie",
-  "genero": "Drama",
-  "plataforma": "Netflix",
-  "estado": "Pendiente",
-  "formato": "Serie",
-  "fechaCreacion": new Date(),
-  "fechaActualizacion": new Date()
-})
-```
+Insertar un nuevo documento con los campos requeridos
 
 ### Buscar Recursos por Estado
-```javascript
-db.recursos.find({ "estado": "Terminado" })
-```
+Filtrar documentos por el campo estado
 
 ### Filtrar por Formato
-```javascript
-db.recursos.find({ "formato": "Serie" })
-```
+Filtrar documentos por el campo formato
 
 ### Buscar por Nombre
-```javascript
-db.recursos.find({ "nombre": { $regex: "Breaking", $options: "i" } })
-```
+Realizar búsquedas de texto en el campo nombre
 
 ### Actualizar un Recurso
-```javascript
-db.recursos.updateOne(
-  { "_id": ObjectId("ID_DEL_RECURSO") },
-  { 
-    $set: {
-      "estado": "Terminado",
-      "valoracion": 4,
-      "fechaTerminacion": new Date(),
-      "fechaActualizacion": new Date()
-    }
-  }
-)
-```
+Modificar campos específicos de un documento existente
 
-## Índices Creados
+## Índices Recomendados
 
-Para optimizar las consultas, se crean los siguientes índices:
-
-```javascript
-db.recursos.createIndex({ "nombre": 1 })
-db.recursos.createIndex({ "estado": 1 })
-db.recursos.createIndex({ "formato": 1 })
-db.recursos.createIndex({ "plataforma": 1 })
-```
+Para optimizar las consultas, se recomiendan los siguientes índices:
+- Índice en el campo nombre
+- Índice en el campo estado
+- Índice en el campo formato
+- Índice en el campo plataforma
 
 ## 📊 Datos de Ejemplo Incluidos
 
